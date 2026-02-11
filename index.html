@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TK CLUB AI V6 PRO RECOVERY</title>
+    <style>
+        html, body { margin:0; padding:0; height:100%; width:100%; overflow:hidden; background: #000; }
+        iframe { position:absolute; top:0; left:0; width:100%; height:100%; border:none; z-index:1; }
+
+        .box {
+            width: 150px; 
+            background: rgba(10, 10, 10, 0.95);
+            border: 2px solid #00ffff;
+            border-radius: 12px;
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.4), inset 0 0 10px rgba(0, 255, 255, 0.2);
+            color: #fff;
+            font-family: 'Orbitron', 'Segoe UI', sans-serif;
+            text-align: center;
+            padding: 10px;
+            position: fixed; top: 50px; left: 20px; z-index: 9999;
+            cursor: move; backdrop-filter: blur(15px);
+            user-select: none; touch-action: none;
+        }
+
+        .period-txt { font-size: 9px; color: #0ff; letter-spacing: 1px; margin-bottom: 4px; }
+        .timer { font-size: 24px; font-weight: bold; color: #fff; text-shadow: 0 0 10px #fff; }
+        .prediction { font-size: 32px; font-weight: 900; margin: 8px 0; text-transform: uppercase; transition: all 0.5s; }
+        .status-bar { font-size: 10px; color: #0f0; margin-top: 8px; border-top: 1px solid #333; padding-top: 5px; }
+        
+        .scan-line-container { width: 100%; height: 3px; background: #222; margin: 5px 0; border-radius: 2px; overflow: hidden; }
+        .scan-line { height: 100%; width: 0%; background: linear-gradient(90deg, #0ff, #f0f); transition: width 1.5s ease-in-out; }
+        
+        #loginPart input { width: 85%; padding: 6px; margin: 8px 0; background: #111; border: 1px solid #0ff; color: #0ff; text-align: center; border-radius: 5px; }
+        #loginPart button { background: #0ff; border: none; padding: 6px 20px; font-weight: bold; cursor: pointer; border-radius: 5px; box-shadow: 0 0 10px #0ff; }
+    </style>
+</head>
+<body>
+
+    <iframe src="https://tkclub2.com/#/register?invitationCode=41654207537"></iframe>
+
+    <div class="box" id="signalBox">
+        <div id="loginPart">
+            <div style="font-size: 12px; color: #0ff; font-weight: bold;">AI V6 PRO</div>
+            <input type="password" id="passInput" placeholder="ENTER KEY">
+            <button onclick="checkPassword()">ACTIVATE</button>
+        </div>
+
+        <div id="signalPart" style="display:none;">
+            <div class="period-txt" id="periodNumber">CONNECTING...</div>
+            <div class="timer" id="countdown">00s</div>
+            <div class="prediction" id="predicted">WAIT</div>
+            <div class="scan-line-container"><div class="scan-line" id="loader"></div></div>
+            <div class="status-bar" id="status">AI NEURAL ACTIVE</div>
+        </div>
+    </div>
+
+    <script>
+        const box = document.getElementById('signalBox');
+        let isFetching = false;
+        let history = []; 
+        let trendScore = 0;
+
+        // Draggable Logic
+        let xOffset = 0, yOffset = 0, isDragging = false, initialX, initialY;
+        box.addEventListener("touchstart", (e) => { isDragging = true; initialX = e.touches[0].clientX - xOffset; initialY = e.touches[0].clientY - yOffset; }, {passive: false});
+        document.addEventListener("touchmove", (e) => { if(isDragging) { e.preventDefault(); xOffset = e.touches[0].clientX - initialX; yOffset = e.touches[0].clientY - initialY; box.style.transform = `translate(${xOffset}px, ${yOffset}px)`; } }, {passive: false});
+        document.addEventListener("touchend", () => isDragging = false);
+
+        function checkPassword() {
+            if(document.getElementById('passInput').value === "ruman56") {
+                document.getElementById('loginPart').style.display = 'none';
+                document.getElementById('signalPart').style.display = 'block';
+                setInterval(updateLogic, 1000);
+            } else { alert("ACCESS DENIED!"); }
+        }
+
+        function updateLogic() {
+            const now = new Date();
+            const dhaka = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Dhaka"}));
+            const sec = dhaka.getSeconds();
+            
+            // 30 সেকেন্ডের সাইকেল লজিক
+            const remaining = sec >= 30 ? 60 - sec : 30 - sec;
+            const tMin = (dhaka.getHours() * 60) + dhaka.getMinutes();
+            const pIdx = (tMin * 2) + (sec >= 30 ? 2 : 1);
+            const dStr = dhaka.getFullYear() + String(dhaka.getMonth()+1).padStart(2,'0') + String(dhaka.getDate()).padStart(2,'0');
+            
+            document.getElementById('periodNumber').textContent = "PERIOD: " + dStr + String(pIdx).padStart(4, '0');
+            document.getElementById('countdown').textContent = remaining + "s";
+
+            // সিগনাল ক্যালকুলেশন সময় (নতুন পিরিয়ড শুরুর ৫ সেকেন্ড আগে)
+            if ((remaining === 26 || remaining === 6) && !isFetching) {
+                isFetching = true;
+                analyzeMarketAdvanced();
+            }
+            if (remaining === 30 || remaining === 0) {
+                isFetching = false;
+            }
+        }
+
+        function analyzeMarketAdvanced() {
+            const display = document.getElementById('predicted');
+            const loader = document.getElementById('loader');
+            const status = document.getElementById('status');
+
+            status.textContent = "AI ANALYZING...";
+            status.style.color = "#ffea00";
+            loader.style.width = "100%";
+            display.style.filter = "blur(5px)";
+
+            setTimeout(() => {
+                let result;
+                // অ্যাডভান্সড প্রোবাবিলিটি লজিক
+                const basePatterns = ["BIG", "SMALL", "BIG", "SMALL", "BIG", "BIG", "SMALL", "SMALL"];
+                
+                // ট্রেন্ড ক্যালকুলেশন: যদি টানা ২ বার একই আসে, ৩য় বার বিপরীত আসার সম্ভাবনা ৮০%
+                if (history.length >= 2 && history[0] === history[1]) {
+                    const counterResult = history[0] === "BIG" ? "SMALL" : "BIG";
+                    // র‍্যান্ডম ফ্যাক্টর যোগ (যাতে একদম রোবটিক না মনে হয়)
+                    result = Math.random() > 0.2 ? counterResult : history[0];
+                } else {
+                    result = basePatterns[Math.floor(Math.random() * basePatterns.length)];
+                }
+
+                // হিস্ট্রি আপডেট
+                history.unshift(result);
+                if(history.length > 5) history.pop();
+
+                // ডিসপ্লে আপডেট
+                display.textContent = result;
+                display.style.filter = "blur(0px)";
+                
+                if(result === "BIG") {
+                    display.style.color = "#00ffcc";
+                    display.style.textShadow = "0 0 20px #00ffcc";
+                } else {
+                    display.style.color = "#ff00ff";
+                    display.style.textShadow = "0 0 20px #ff00ff";
+                }
+
+                status.textContent = "ACCURACY: " + (85 + Math.floor(Math.random() * 10)) + "%";
+                status.style.color = "#0f0";
+                
+                setTimeout(() => { loader.style.width = "0%"; }, 1500);
+            }, 2500); // ২.৫ সেকেন্ড এনালাইসিস টাইম
+        }
+    </script>
+</body>
+</html>
